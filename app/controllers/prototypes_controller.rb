@@ -1,5 +1,5 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :move_to_index, only: :edit 
 
 
@@ -23,7 +23,7 @@ class PrototypesController < ApplicationController
   def show
     @prototype = Prototype.find(params[:id])
     @comment = Comment.new
-    @comments = Comment.all
+    @comments = @prototype.comments.includes(:user)
   end
 
   def edit
